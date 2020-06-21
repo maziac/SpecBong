@@ -172,6 +172,9 @@ UploadSpritePatternsLoop:
 
     ; main loop of the game
 GameLoop:
+        ; Check if debugger messages need to be executed
+        call    dezog_check_for_message
+
         call    GameLoop_BaseThings
         IFDEF DISPLAY_PERFORMANCE_DEBUG_BORDER
             ; magenda border: to measure the AI code performance
@@ -1390,6 +1393,12 @@ Rand16:
 .storeSeed:
         ld      (.s),hl
         ret
+
+
+    ;-------------------------------------------------------------------------------------
+    ; DeZog - To cooperate with the debugger when debugging on a ZX Next.
+    include "dezog.asm"
+
 
     ;-------------------------------------------------------------------------------------
     ; data area
