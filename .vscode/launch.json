@@ -15,7 +15,7 @@
             },
             "listFiles": [
                 {
-                    "path": "SpecBong.list",
+                    "path": "SpecBong.lst",
                     "asm": "sjasmplus",
                     "mainFile": "SpecBong.asm"
                 }
@@ -53,7 +53,7 @@
             },
             "listFiles": [
                 {
-                    "path": "SpecBong.list",
+                    "path": "SpecBong.lst",
                     "asm": "sjasmplus",
                     "mainFile": "SpecBong.asm"
                 }

@@ -6,9 +6,8 @@
             "type": "shell",
             "command": "sjasmplus",
             "args": [
-                "--lst=SpecBong.list",
+                "--lst=SpecBong.lst",
                 "--lstlab",
-                //"--sym=SpecBong.labels",
                 "--fullpath",
                 "SpecBong.asm"
             ],
