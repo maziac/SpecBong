@@ -15,6 +15,19 @@ DEZOG_PORT_UART_TX:   equ 0x133b
 ; UART Status Bits:
 DEZOG_UART_RX_FIFO_EMPTY: equ 0   ; 0=empty, 1=not empty
 
+;===========================================================================
+; Magic number addresses to recognize the debugger
+;===========================================================================
+magic_number_a:     equ 0x0000     ; Address 0x0000 (0xE000)
+magic_number_b:     equ 0x0001
+magic_number_c:     equ 0x0066      ; Address 0x0066 (0xE066)
+magic_number_d:     equ 0x0067
+
+; The corresponding values
+MAGIC_NUMBER_VALUE_A:	equ 0x18
+MAGIC_NUMBER_VALUE_B:	equ 0x64
+MAGIC_NUMBER_VALUE_C:	equ 0xF5
+MAGIC_NUMBER_VALUE_D:	equ 0xED
 
 ;===========================================================================
 ; Checks if a new message has arrived.
@@ -49,7 +62,7 @@ _dezog_start_cmd_loop:
 	; to address 0x0000.
 
 	; Push a 1=Execute "Function: receive command"
-	push 0x0100
+	push 0x0001
 
 	; Push a 0x0000 on the stack. With this the call is distinguished from
 	; a SW breakpoint.
@@ -61,16 +74,34 @@ _dezog_start_cmd_loop:
 ;===========================================================================
 ; Initializes the given bank with debugger code.
 ; 8 bytes at address 0 and 14 bytes at address 66h.
+; If slot 0 does not contain the bank for DeZog or a 
+; already modified bank the function does nothing.
 ; Parameters:
 ;   A = bank to initialize.
 ; Changes:
-;   -
+;   AF
 ; ===========================================================================
 dezog_init_slot0_bank:
-	; Put the bank as aprameter on the stack
-	push af
+	; Put the bank as parameter on the stack
+	ld (.push+2),a
+
+	; First check if slot0 already contains a bank with modifications for DeZog.
+	ld a,(magic_number_a)	; ok (suppress warning)
+	cp MAGIC_NUMBER_VALUE_A
+	ret nz
+	ld a,(magic_number_b)	; ok (suppress warning)
+	cp MAGIC_NUMBER_VALUE_B
+	ret nz
+	ld a,(magic_number_c)	; ok (suppress warning)
+	cp MAGIC_NUMBER_VALUE_C
+	ret nz
+	ld a,(magic_number_d)	; ok (suppress warning)
+	cp MAGIC_NUMBER_VALUE_D
+	ret nz
+
 	; Push a 2=Execute "Function: init_slot0_bank"
-	push 0x0200
+.push:
+	push 0x0002
 	; Push a 0x0000 on the stack. With this the call is distinguished from
 	; a SW breakpoint.
 	push 0x0000

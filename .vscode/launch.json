@@ -7,8 +7,8 @@
         {
             "type": "dezog",
             "request": "launch",
-            "name": "CSpect",
-            "remoteType": "cspect",
+            "name": "ZEsarUX",
+            "remoteType": "zrcp",
             "cspect": {
                 "hostname": "localhost",
                 "port": 11000,
@@ -22,7 +22,7 @@
             ],
             "history": {
                 "reverseDebugInstructionCount": 1000000,
-                "spotCount": 10  
+                "spotCount": 10
             },
             "startAutomatically": false,
             "skipInterrupt": true,
@@ -42,6 +42,44 @@
             "tmpDir": ".tmp"
         },
 
+        {
+            "type": "dezog",
+            "request": "launch",
+            "name": "CSpect",
+            "remoteType": "cspect",
+            "cspect": {
+                "hostname": "localhost",
+                "port": 11000,
+            },
+            "listFiles": [
+                {
+                    "path": "SpecBong.lst",
+                    "asm": "sjasmplus",
+                    "mainFile": "SpecBong.asm"
+                }
+            ],
+            "history": {
+                "reverseDebugInstructionCount": 1000000,
+                "spotCount": 10
+            },
+            "startAutomatically": false,
+            "skipInterrupt": true,
+            "commandsAfterLaunch": [
+                "-logpoint enable",
+                "-assert enable",
+                "-sprites",
+                "-patterns",
+            ],
+            "disassemblerArgs": {
+                "esxdosRst": true
+            },
+            "rootFolder": "${workspaceFolder}",
+            "topOfStack": "initialStackTop",
+            "load": "SpecBong.nex",
+            "smallValuesMaximum": 513,
+            "tmpDir": ".tmp"
+        },
+        
         {
             "type": "dezog",
             "request": "launch",
